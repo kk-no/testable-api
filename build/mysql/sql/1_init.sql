@@ -1,0 +1,8 @@
+CREATE DATABASE IF NOT EXISTS testable;
+USE testable;
+
+CREATE TABLE `users` (
+  `id` VARCHAR(36) NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`ID`)
+);
