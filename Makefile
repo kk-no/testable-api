@@ -11,6 +11,10 @@ run:
 test:
 	go test ./...
 
+.PHONY: testv
+testv:
+	go test -v ./...
+
 .PHONY: tidy
 tidy:
 	go mod tidy

@@ -4,14 +4,21 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/kk-no/testable-api/database/mysql"
 	"github.com/kk-no/testable-api/models"
 )
 
+type UserHandler interface {
+	FindByID(ctx context.Context, id string) (*models.User, error)
+	Create(ctx context.Context, user *models.User) error
+	Update(ctx context.Context, user *models.User) error
+}
+
 type User struct{ conn *sql.DB }
 
-func NewUser() *User {
-	return &User{conn: mysql.Conn}
+var _ UserHandler = (*User)(nil)
+
+func NewUser(conn *sql.DB) *User {
+	return &User{conn: conn}
 }
 
 func (u *User) FindByID(ctx context.Context, id string) (*models.User, error) {

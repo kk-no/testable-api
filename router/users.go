@@ -2,18 +2,18 @@ package router
 
 import (
 	"database/sql"
-	"log"
 	"net/http"
 
 	"github.com/go-chi/chi"
+	"github.com/kk-no/testable-api/database"
 	"github.com/kk-no/testable-api/models"
 	"github.com/kk-no/testable-api/store"
 )
 
-type User struct{ Store *store.User }
+type User struct{ Store store.UserHandler }
 
 func NewUser() *User {
-	return &User{store.NewUser()}
+	return &User{store.NewUser(database.Conn)}
 }
 
 func Users(r chi.Router) {
@@ -28,7 +28,6 @@ func (u *User) GetByID(w http.ResponseWriter, r *http.Request) {
 
 	_, err := u.Store.FindByID(ctx, chi.URLParam(r, "userID"))
 	if err != nil {
-		log.Println(err)
 		if err == sql.ErrNoRows {
 			w.WriteHeader(http.StatusNotFound)
 			return

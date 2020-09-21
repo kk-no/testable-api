@@ -6,9 +6,8 @@ import (
 	"os"
 
 	_ "github.com/go-sql-driver/mysql" // mysql driver
+	"github.com/kk-no/testable-api/database"
 )
-
-var Conn *sql.DB
 
 func init() {
 	conn, err := sql.Open("mysql", os.Getenv("DSN"))
@@ -19,5 +18,5 @@ func init() {
 		log.Fatalf("Failed to communicate with the database: %v", err)
 	}
 
-	Conn = conn
+	database.Conn = conn
 }
